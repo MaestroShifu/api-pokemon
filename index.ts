@@ -1,4 +1,5 @@
 import { startServer, app } from './src/infrastructure/server/app';
+import config from './src/infrastructure/config/config';
 
-const startProject = startServer(app, 3000);
+const startProject = startServer(app, +config.PORT);
 startProject();
