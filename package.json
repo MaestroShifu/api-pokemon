@@ -4,6 +4,7 @@
   "description": "Prueba tecnica backend 57block",
   "main": "index.js",
   "scripts": {
+    "prepare": "husky install",
     "build": "tsc",
     "dev": "ts-node-dev ./index.ts",
     "lint": "eslint . --ext .ts",
