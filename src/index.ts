@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import express, { Application, Request, Response } from 'express';
 
 const app: Application = express();
@@ -15,7 +16,6 @@ app.get('/', async (req: Request, res: Response): Promise<Response> => {
 
 try {
   app.listen(port, (): void => {
-    
     console.log(`Connected successfully on port ${port}`);
   });
 } catch (error) {
