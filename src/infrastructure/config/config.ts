@@ -2,9 +2,9 @@ import dotenv, { DotenvConfigOptions } from 'dotenv';
 import path from 'path';
 
 export enum Environment {
-  dev = 'dev',
-  prod = 'prod',
-  test = 'test'
+  'dev' = 'dev',
+  'prod' = 'prod',
+  'test' = 'test'
 }
 
 const loadEnviroment = (env: Environment) => {
@@ -20,12 +20,10 @@ const loadEnviroment = (env: Environment) => {
       urlPath = '../../../environment/test.envs';
       break;
   }
-  if (urlPath) {
-    const configEnv: DotenvConfigOptions = {
-      path: path.join(path.dirname(__filename), urlPath)
-    };
-    dotenv.config(configEnv);
-  }
+  const configEnv: DotenvConfigOptions = {
+    path: path.join(path.dirname(__filename), urlPath)
+  };
+  dotenv.config(configEnv);
 };
 
 interface IEnviroment {
@@ -36,11 +34,11 @@ interface IEnviroment {
 }
 
 export const getEnviroment = (): IEnviroment => {
-  loadEnviroment(process.env.NODE_ENV as Environment);
+  loadEnviroment((process.env.NODE_ENV as Environment) || Environment.dev);
   return {
     ENV_NODE: (process.env.NODE_ENV as Environment) || Environment.dev,
-    PORT: process.env.PORT || '5000',
-    DATABASE_URL: process.env.DATABASE_URL || '',
-    TIME_OUT: process.env.TIME_OUT || '500'
+    PORT: process.env.PORT as string,
+    DATABASE_URL: process.env.DATABASE_URL as string,
+    TIME_OUT: process.env.TIME_OUT as string
   };
 };

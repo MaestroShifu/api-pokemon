@@ -12,7 +12,6 @@ describe('Config Server', () => {
     delete process.env.NODE_ENV;
     const config = getEnviroment();
     expect(config.ENV_NODE).toEqual(Environment.dev);
-    expect(config.PORT).toEqual('5000');
     done();
   });
 
