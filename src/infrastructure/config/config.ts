@@ -32,6 +32,7 @@ interface IEnviroment {
   ENV_NODE: Environment;
   PORT: string;
   DATABASE_URL: string;
+  TIME_OUT: string;
 }
 
 export const getEnviroment = (): IEnviroment => {
@@ -39,6 +40,7 @@ export const getEnviroment = (): IEnviroment => {
   return {
     ENV_NODE: (process.env.NODE_ENV as Environment) || Environment.dev,
     PORT: process.env.PORT || '5000',
-    DATABASE_URL: process.env.DATABASE_URL || ''
+    DATABASE_URL: process.env.DATABASE_URL || '',
+    TIME_OUT: process.env.TIME_OUT || '500'
   };
 };
