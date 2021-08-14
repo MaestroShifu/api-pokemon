@@ -23,10 +23,10 @@ describe('Start server', () => {
     const app: unknown = {
       listen: listenMock
     };
-    const start = await startServer(app as Express, 3000);
-    start();
+    const start = startServer(app as Express, 3000);
+    await start();
+    expect(startDataBase).toHaveBeenCalled();
     expect(listenMock).toHaveBeenCalledWith(3000, expect.anything());
     expect(listenMock).toHaveBeenCalled();
-    expect(startDataBase).toHaveBeenCalled();
   });
 });

@@ -5,7 +5,7 @@ import { getEnviroment } from '../config/config';
 import configDB from './knexfile';
 
 const env = getEnviroment();
-const debug = createDebug('Database:connect');
+const debug = createDebug('Server:connect');
 
 export const startDataBase = async (): Promise<boolean> => {
   const database = Knex(configDB);

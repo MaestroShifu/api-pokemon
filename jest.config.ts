@@ -15,7 +15,8 @@ const config: InitialOptionsTsJest = {
   },
   transform: {
     ...tsjPreset.transform
-  }
+  },
+  testMatch: ['**/?(*.)+(spec|test).ts']
 };
 
 export default config;

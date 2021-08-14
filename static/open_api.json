@@ -1,0 +1,48 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Pokemon",
+        "description": "Documentation of API Pokemon",
+        "contact": {
+            "name": "MaestroShifu",
+            "url": "https://github.com/MaestroShifu",
+            "email": "sdanielsarsantos@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000/api/v1",
+            "description": "Development server"
+        },
+        {
+            "url": "http://production:3000/api/v1",
+            "description": "Production server... coming soon"
+        }
+    ],
+    "tags": [],
+    "components": {},
+    "security": [],
+    "paths": {
+        "/hello-world": {
+            "get": {
+                "summary": "Esto es una prueba...",
+                "description": "Esto es una prueba para subir con terraform api getaway",
+                "operationId": "hello-world",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "Respuesta satisfactoria prueba.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
