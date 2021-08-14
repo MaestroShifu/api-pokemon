@@ -20,24 +20,102 @@
             "description": "Production server... coming soon"
         }
     ],
-    "tags": [],
-    "components": {},
+    "tags": [
+        {
+            "name": "ManageAuth",
+            "description": "Manejo de autenticacion en el sistema"
+        }
+    ],
     "security": [],
     "paths": {
-        "/hello-world": {
-            "get": {
-                "summary": "Esto es una prueba...",
-                "description": "Esto es una prueba para subir con terraform api getaway",
-                "operationId": "hello-world",
-                "parameters": [],
+        "/auth/register": {
+            "summary": "Manejo de creacion de usuarios",
+            "description": "Sirve para agregar nuevos usuarios en la plataforma",
+            "post": {
+                "tags": ["ManageAuth"],
+                "summary": "Crear usuario",
+                "description": "Sirve para registrar un nuevo usuario en la plataforma",
+                "operationId": "registerAuth",
+                "requestBody": {
+                    "required": true,
+                    "$ref": "#/components/requestBodies/auth_register"
+                },
                 "responses": {
-                    "200": {
-                        "description": "Respuesta satisfactoria prueba.",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                "type": "string"
-                                }
+                    "204": {
+                        "description": "asdasd"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "parameters": {},
+        "schemas": {
+            "auth_register_body": {
+                "type": "object",
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "pattern": "^[^@]+@[^@]+\\.[a-zA-Z]{2,}$",
+                        "maxLength": 300
+                    },
+                    "name": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z ]+$",
+                        "maxLength": 300,
+                        "minLength": 2
+                    },
+                    "last_name": {
+                        "type": "string",
+                        "pattern": "^[A-Za-z ]+$",
+                        "maxLength": 300,
+                        "minLength": 2
+                    },
+                    "password": {
+                        "type": "string",
+                        "pattern": "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[!@#?\\]]).{10,}$",
+                        "minLength": 10
+                    },
+                    "re-password": {
+                        "type": "string",
+                        "pattern": "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[!@#?\\]]).{10,}$",
+                        "minLength": 10
+                    }
+                },
+                "required": [
+                    "email",
+                    "name",
+                    "last_name",
+                    "password",
+                    "re-password"
+                ],
+                "additionalProperties": false
+            }
+        },
+        "examples": {
+            "auth_register_body_example": {
+                "summary": "Registro de nuevos usuarios",
+                "value": {
+                    "email": "sdanielsarsantos@gmail.com",
+                    "password": "daniSlsas]",
+                    "re-password": "daniSlsas]",
+                    "name": "Daniel Steven",
+                    "last_name": "Sarmiento Santos"
+                }
+            }
+        },
+        "responses": {},
+        "requestBodies": {
+            "auth_register": {
+                "description": "Body para crear un usuario nuevo",
+                "content": {
+                    "application/json": {
+                        "schema":{
+                            "$ref": "#/components/schemas/auth_register_body"
+                        },
+                        "examples": {
+                            "auth_register_body_example": {
+                                "$ref": "#/components/examples/auth_register_body_example"
                             }
                         }
                     }

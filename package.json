@@ -6,7 +6,7 @@
   "scripts": {
     "prepare": "husky install",
     "build": "tsc",
-    "dev": "DEBUG=* NODE_ENV=dev nodemon",
+    "dev": "DEBUG=Server:* NODE_ENV=dev nodemon",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "prettier:format": "prettier --config .prettierrc 'src/**/*.ts' --write",
@@ -56,6 +56,7 @@
     "express": "^4.17.1",
     "express-openapi-validate": "^0.6.1",
     "helmet": "^4.6.0",
+    "jsonwebtoken": "^8.5.1",
     "knex": "^0.21.21",
     "objection": "^2.2.15",
     "pg": "^8.7.1",
