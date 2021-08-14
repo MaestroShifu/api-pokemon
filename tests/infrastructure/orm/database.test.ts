@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import Knex from 'knex';
 import { Model } from 'objection';
 import { mocked } from 'ts-jest/utils';
