@@ -17,7 +17,7 @@ const loadEnviroment = (env: Environment) => {
       urlPath = '../../../environment/production.env';
       break;
     case Environment.test:
-      urlPath = '../../../environment/test.envs';
+      urlPath = '../../../environment/test.env';
       break;
   }
   const configEnv: DotenvConfigOptions = {
@@ -39,10 +39,10 @@ export const getEnviroment = (): IEnviroment => {
   loadEnviroment((process.env.NODE_ENV as Environment) || Environment.dev);
   return {
     ENV_NODE: (process.env.NODE_ENV as Environment) || Environment.dev,
-    PORT: process.env.PORT || '3000',
-    DATABASE_URL: process.env.DATABASE_URL || '',
-    TIME_OUT: process.env.TIME_OUT || '1000',
-    SALT: process.env.SALT || '9',
-    JWT_KEY: process.env.JWT_KEY || 'zzzzzz'
+    PORT: process.env.PORT as string,
+    DATABASE_URL: process.env.DATABASE_URL as string,
+    TIME_OUT: process.env.TIME_OUT as string,
+    SALT: process.env.SALT as string,
+    JWT_KEY: process.env.JWT_KEY as string
   };
 };
