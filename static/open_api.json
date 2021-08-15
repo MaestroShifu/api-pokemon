@@ -1,126 +1,286 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "API Pokemon",
-        "description": "Documentation of API Pokemon",
-        "contact": {
-            "name": "MaestroShifu",
-            "url": "https://github.com/MaestroShifu",
-            "email": "sdanielsarsantos@gmail.com"
-        },
-        "version": "1.0.0"
+      "title": "API Pokemon",
+      "description": "Documentation of API Pokemon",
+      "contact": {
+        "name": "MaestroShifu",
+        "url": "https://github.com/MaestroShifu",
+        "email": "sdanielsarsantos@gmail.com"
+      },
+      "version": "1.0.0"
     },
     "servers": [
-        {
-            "url": "http://localhost:3000/api/v1",
-            "description": "Development server"
-        },
-        {
-            "url": "http://production:3000/api/v1",
-            "description": "Production server... coming soon"
-        }
+      {
+        "url": "http://localhost:3000/api/v1",
+        "description": "Development server"
+      },
+      {
+        "url": "http://production:3000/api/v1",
+        "description": "Production server... coming soon"
+      }
     ],
     "tags": [
-        {
-            "name": "ManageAuth",
-            "description": "Manejo de autenticacion en el sistema"
-        }
+      {
+        "name": "ManageAuth",
+        "description": "Manejo de autenticacion en el sistema"
+      }
     ],
     "security": [],
     "paths": {
-        "/auth/register": {
-            "summary": "Manejo de creacion de usuarios",
-            "description": "Sirve para agregar nuevos usuarios en la plataforma",
-            "post": {
-                "tags": ["ManageAuth"],
-                "summary": "Crear usuario",
-                "description": "Sirve para registrar un nuevo usuario en la plataforma",
-                "operationId": "registerAuth",
-                "requestBody": {
-                    "required": true,
-                    "$ref": "#/components/requestBodies/auth_register"
-                },
-                "responses": {
-                    "204": {
-                        "description": "asdasd"
-                    }
-                }
+      "/auth/register": {
+        "summary": "Manejo de creacion de usuarios",
+        "description": "Sirve para agregar nuevos usuarios en la plataforma",
+        "post": {
+          "tags": [
+            "ManageAuth"
+          ],
+          "summary": "Crear usuario",
+          "description": "Sirve para registrar un nuevo usuario en la plataforma",
+          "operationId": "registerAuth",
+          "requestBody": {
+            "$ref": "#/components/requestBodies/auth_register"
+          },
+          "responses": {
+            "201": {
+              "$ref": "#/components/responses/auth_response"
+            },
+            "400": {
+              "$ref": "#/components/responses/general_error_response"
+            },
+            "500": {
+              "$ref": "#/components/responses/general_error_response"
             }
+          }
         }
+      },
+      "/auth/login": {
+        "summary": "Manejo de autenticacion de usuarios",
+        "description": "Sirve para la autenticacion en nuestra api",
+        "post": {
+          "tags": [
+            "ManageAuth"
+          ],
+          "summary": "Ingresar con un usuario",
+          "description": "Sirve para ingresar en nuestra plataforma",
+          "operationId": "loginAuth",
+          "requestBody": {
+            "$ref": "#/components/requestBodies/auth_login"
+          },
+          "responses": {
+            "201": {
+              "$ref": "#/components/responses/auth_response"
+            },
+            "400": {
+              "$ref": "#/components/responses/general_error_response"
+            },
+            "500": {
+              "$ref": "#/components/responses/general_error_response"
+            }
+          }
+        }
+      }
     },
     "components": {
-        "parameters": {},
-        "schemas": {
-            "auth_register_body": {
-                "type": "object",
-                "properties": {
-                    "email": {
-                        "type": "string",
-                        "pattern": "^[^@]+@[^@]+\\.[a-zA-Z]{2,}$",
-                        "maxLength": 300
-                    },
-                    "name": {
-                        "type": "string",
-                        "pattern": "^[A-Za-z ]+$",
-                        "maxLength": 300,
-                        "minLength": 2
-                    },
-                    "last_name": {
-                        "type": "string",
-                        "pattern": "^[A-Za-z ]+$",
-                        "maxLength": 300,
-                        "minLength": 2
-                    },
-                    "password": {
-                        "type": "string",
-                        "pattern": "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[!@#?\\]]).{10,}$",
-                        "minLength": 10
-                    },
-                    "re-password": {
-                        "type": "string",
-                        "pattern": "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[!@#?\\]]).{10,}$",
-                        "minLength": 10
-                    }
-                },
-                "required": [
-                    "email",
-                    "name",
-                    "last_name",
-                    "password",
-                    "re-password"
-                ],
-                "additionalProperties": false
+      "parameters": {},
+      "schemas": {
+        "auth_register_body": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "name": {
+              "type": "string",
+              "maxLength": 300,
+              "minLength": 2
+            },
+            "last_name": {
+              "type": "string",
+              "maxLength": 300,
+              "minLength": 2
+            },
+            "password": {
+              "type": "string",
+              "minLength": 10
+            },
+            "re_password": {
+              "type": "string",
+              "minLength": 10
             }
+          },
+          "required": [
+            "email",
+            "password",
+            "re_password"
+          ],
+          "additionalProperties": false
         },
-        "examples": {
-            "auth_register_body_example": {
-                "summary": "Registro de nuevos usuarios",
-                "value": {
-                    "email": "sdanielsarsantos@gmail.com",
-                    "password": "daniSlsas]",
-                    "re-password": "daniSlsas]",
-                    "name": "Daniel Steven",
-                    "last_name": "Sarmiento Santos"
-                }
+        "auth_login_body": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "password": {
+              "type": "string",
+              "minLength": 10
             }
+          },
+          "required": [
+            "email",
+            "password"
+          ],
+          "additionalProperties": false
         },
-        "responses": {},
-        "requestBodies": {
-            "auth_register": {
-                "description": "Body para crear un usuario nuevo",
-                "content": {
-                    "application/json": {
-                        "schema":{
-                            "$ref": "#/components/schemas/auth_register_body"
-                        },
-                        "examples": {
-                            "auth_register_body_example": {
-                                "$ref": "#/components/examples/auth_register_body_example"
-                            }
-                        }
-                    }
-                }
+        "auth_response": {
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "name": {
+              "type": "string",
+              "maxLength": 300,
+              "minLength": 2
+            },
+            "last_name": {
+              "type": "string",
+              "maxLength": 300,
+              "minLength": 2
+            },
+            "token": {
+              "type": "string",
+              "maxLength": 500
             }
+          },
+          "required": [
+            "email",
+            "token"
+          ],
+          "additionalProperties": false
+        },
+        "general_error": {
+          "type": "object",
+          "properties": {
+            "statusCode": {
+              "type": "string",
+              "enum": [
+                "400",
+                "500"
+              ]
+            },
+            "message": {
+              "type": "string",
+              "maxLength": 300
+            }
+          },
+          "required": [
+            "statusCode",
+            "message"
+          ],
+          "additionalProperties": false
         }
+      },
+      "examples": {
+        "auth_register_body_example": {
+          "summary": "Registro de nuevos usuarios",
+          "value": {
+            "email": "sdanielsarsantos@gmail.com",
+            "password": "daniSlsas]",
+            "re_password": "daniSlsas]"
+          }
+        },
+        "auth_login_body_example": {
+          "summary": "Ingreso de un usuario",
+          "value": {
+            "email": "sdanielsarsantos@gmail.com",
+            "password": "daniSlsas]"
+          }
+        },
+        "auth_response_example": {
+          "summary": "Respuesta al autenticar en la api",
+          "value": {
+            "email": "sdanielsarsantos@gmail.com",
+            "name": "daniel",
+            "last_name": "santos",
+            "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MzEsImVtYWlsIjoic2RhbmllbHNhcnNhbnRvc0BnbWFpbC5jb20iLCJpYXQiOjE2Mjg5OTQyNTIsImV4cCI6MTYyOTAwMTQ1Mn0.2HopQy5sD2YJgUjh9RPsdE7B8YEO6YG7AgZuDgP9uFM"
+          }
+        },
+        "general_error_example": {
+          "summary": "Manejo de error del api",
+          "value": {
+            "statusCode": "500",
+            "message": "Error del lado del servidor :3"
+          }
+        }
+      },
+      "responses": {
+        "auth_response": {
+          "description": "Es la respuesta de un proceso de autenticacion",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/auth_response"
+              },
+              "examples": {
+                "auth_response_example": {
+                  "$ref": "#/components/examples/auth_response_example"
+                }
+              }
+            }
+          }
+        },
+        "general_error_response": {
+          "description": "La repuesta general en caso de error del api",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/general_error"
+              },
+              "examples": {
+                "auth_response_example": {
+                  "$ref": "#/components/examples/general_error_example"
+                }
+              }
+            }
+          }
+        }
+      },
+      "requestBodies": {
+        "auth_register": {
+          "description": "Body para crear un usuario nuevo",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/auth_register_body"
+              },
+              "examples": {
+                "auth_register_body_example": {
+                  "$ref": "#/components/examples/auth_register_body_example"
+                }
+              }
+            }
+          }
+        },
+        "auth_login": {
+          "description": "Body para ingresar con un usuario",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/auth_login_body"
+              },
+              "examples": {
+                "auth_login_body_example": {
+                  "$ref": "#/components/examples/auth_login_body_example"
+                }
+              }
+            }
+          }
+        }
+      }
     }
-}
+  }

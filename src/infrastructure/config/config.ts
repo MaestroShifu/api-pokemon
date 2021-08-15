@@ -31,6 +31,8 @@ interface IEnviroment {
   PORT: string;
   DATABASE_URL: string;
   TIME_OUT: string;
+  SALT: string;
+  JWT_KEY: string;
 }
 
 export const getEnviroment = (): IEnviroment => {
@@ -39,6 +41,8 @@ export const getEnviroment = (): IEnviroment => {
     ENV_NODE: (process.env.NODE_ENV as Environment) || Environment.dev,
     PORT: process.env.PORT as string,
     DATABASE_URL: process.env.DATABASE_URL as string,
-    TIME_OUT: process.env.TIME_OUT as string
+    TIME_OUT: process.env.TIME_OUT as string,
+    SALT: process.env.SALT as string,
+    JWT_KEY: process.env.JWT_KEY as string
   };
 };

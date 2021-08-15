@@ -1,7 +1,8 @@
-import { Router, Request, Response } from 'express';
+import { Router } from 'express';
 import { Swagger } from '../../infrastructure/swagger/swagger';
+import { authController } from '../controllers/auth-controller';
 
-const validator = Swagger.getSwaggerValidator();
+const validator = Swagger.getSwaggerValidator('Auth');
 
 export const getRoutesAuth = (): Router => {
   const authRoutes = Router({
@@ -12,12 +13,14 @@ export const getRoutesAuth = (): Router => {
   authRoutes.post(
     '/auth/register',
     validator.validate('post', '/auth/register'),
-    (_req: Request, res: Response) => {
-      res.status(200).send('funciona!!');
-    }
+    authController.register
+  );
+
+  authRoutes.post(
+    '/auth/login',
+    validator.validate('post', '/auth/login'),
+    authController.login
   );
 
   return authRoutes;
 };
-
-// throw { statusCode: 404, message: 'Not supported' };

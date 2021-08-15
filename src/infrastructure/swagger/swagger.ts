@@ -15,14 +15,16 @@ interface ISwaggerUI {
 export class Swagger {
   public static getSwaggerUI(): ISwaggerUI {
     const OAS = this.getOAS();
+    debug('Succesfull load Swagger UI');
     return {
       serve: swaggerUi.serve,
       setup: swaggerUi.setup(OAS)
     };
   }
 
-  public static getSwaggerValidator(): OpenApiValidator {
+  public static getSwaggerValidator(name: string): OpenApiValidator {
     const OAS = this.getOAS();
+    debug('Succesfull Swagger validator [%s]', name);
     return new OpenApiValidator(OAS);
   }
 
@@ -38,7 +40,6 @@ export class Swagger {
 
   private static getFileToStringOAS(path: string) {
     const fileOpenApi = fs.readFileSync(path, 'utf-8');
-    debug('Succesfull load OAS %j');
     return JSON.parse(fileOpenApi);
   }
 }

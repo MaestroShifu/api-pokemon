@@ -14,7 +14,7 @@ describe('Swagger', () => {
   });
 
   it('Create validator swagger', (done) => {
-    const swaggerValid = Swagger.getSwaggerValidator();
+    const swaggerValid = Swagger.getSwaggerValidator('Testing');
     expect(swaggerValid).toBeInstanceOf(OpenApiValidator);
     done();
   });
