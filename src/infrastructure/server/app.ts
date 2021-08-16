@@ -7,10 +7,12 @@ import { startDataBase } from '../orm/database';
 import { getRoutesSwagger } from '../../interfaces/routers/swagger-routes';
 import { getRoutesAuth } from '../../interfaces/routers/auth-routes';
 import { parserFormatError } from '../middlewares/parser-error';
+import { getRoutesPokemon } from '../../interfaces/routers/pokemon-routes';
 
 const debug = createDebug('Server:App');
 const swagger = getRoutesSwagger();
 const authRouter = getRoutesAuth();
+const pokemonRouter = getRoutesPokemon();
 
 const app = express();
 
@@ -22,6 +24,7 @@ app.use(json());
 
 app.use(swagger);
 app.use(authRouter);
+app.use(pokemonRouter);
 
 app.use(parserFormatError);
 

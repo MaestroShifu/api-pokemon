@@ -14,8 +14,18 @@ export async function up(knex: Knex): Promise<void> {
       .onDelete('SET NULL');
   });
   await knex.schema.createTable('pokemon_type', (table) => {
-    table.integer('pokemon_id').references('id').inTable('pokemons');
-    table.integer('type_id').references('id').inTable('types');
+    table
+      .integer('pokemon_id')
+      .notNullable()
+      .references('id')
+      .inTable('pokemons')
+      .onDelete('CASCADE');
+    table
+      .integer('type_id')
+      .notNullable()
+      .references('id')
+      .inTable('types')
+      .onDelete('CASCADE');
   });
 }
 
