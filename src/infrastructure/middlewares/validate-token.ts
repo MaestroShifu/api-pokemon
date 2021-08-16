@@ -1,20 +1,23 @@
 import { Request, Response, NextFunction } from 'express';
-import { JwtPayload } from 'jsonwebtoken';
-import { verifyToken } from '../lib/jwt';
+import { verifyToken, IGenerateTokenArgs } from '../lib/jwt';
 
-export type IRequestAuth = Request & { userAuth: JwtPayload | string };
+export type IRequestAuth = Request & { userAuth: IGenerateTokenArgs };
 
 export const validateToken = (
-  req: IRequestAuth,
+  req: Request,
   res: Response,
   next: NextFunction
 ): void => {
   try {
     const token = req.headers['x-access-token'];
     const payload = verifyToken(token as string);
-    req.userAuth = payload;
+    (req as IRequestAuth).userAuth = payload;
     next();
   } catch (error) {
-    res.status(401).send('Invalid Token');
+    const result = {
+      statusCode: 401,
+      message: 'Invalid Token'
+    };
+    res.status(result.statusCode).send(result);
   }
 };

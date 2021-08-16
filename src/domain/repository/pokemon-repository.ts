@@ -12,8 +12,9 @@ export interface ICreatePokemonArgs {
 
 export type IUpdatePokemonArgs = Omit<
   ICreatePokemonArgs,
-  'name' | 'ability' | 'types'
+  'name' | 'ability' | 'types' | 'profile_id'
 > & {
+  profile_id: string;
   name?: string;
   ability?: string;
   add_types?: string[];
@@ -21,8 +22,8 @@ export type IUpdatePokemonArgs = Omit<
 };
 
 export const pokemonRepository = {
-  findById: async (id: string): Promise<Pokemon> => {
-    const pokemon = Pokemon.query().findById(id).withGraphFetched('types');
+  findById: async (id: string): Promise<Pokemon | undefined> => {
+    const pokemon = Pokemon.query().findById(id);
     return pokemon;
   },
   create: async (args: ICreatePokemonArgs): Promise<Pokemon> => {
@@ -43,8 +44,7 @@ export const pokemonRepository = {
       name: args.name,
       ability: args.ability,
       is_public: args.is_public,
-      url_image: args.url_image,
-      profile_id: args.profile_id
+      url_image: args.url_image
     });
     const addTypes = await typeRepository.findByNames(args.add_types || []);
     await pokemon.validAddTypes(addTypes);
@@ -53,7 +53,7 @@ export const pokemonRepository = {
     );
     await pokemon.validRemoveTypes(removeTypes);
     const types = await pokemon.$relatedQuery('types');
-    pokemon.types = types;
+    pokemon.types = [...types];
     return pokemon;
   },
   delete: async (id: string): Promise<boolean> => {

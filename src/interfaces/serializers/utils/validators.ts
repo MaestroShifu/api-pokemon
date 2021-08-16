@@ -10,7 +10,7 @@ export const validOnlyLetters = (field: string, fieldName: string): string => {
   return genericValidator({
     field,
     regex: '^[A-Za-z ]+$',
-    message: `The ${fieldName} can only contain letters`
+    message: `The ${fieldName} can only contain letters and don't use accents`
   });
 };
 
@@ -21,7 +21,6 @@ export const validPassword = (field: string): string => {
     message: `Invalid password, it must have an uppercase letter, it must have a lowercase letter and any of these characters !, @, #, ? or ]`
   });
 };
-
 interface GenericValidator {
   field: string;
   regex: RegExp | string;

@@ -3,6 +3,11 @@ import createDebug from 'debug';
 import { createPokemon } from '../../application/use_case/pokemon/create-case';
 import { updatePokemon } from '../../application/use_case/pokemon/update-case';
 import { deletePokemon } from '../../application/use_case/pokemon/delete-case';
+import { IRequestAuth } from '../../infrastructure/middlewares/validate-token';
+import {
+  createPokemonSerializers,
+  updatePokemonSerializers
+} from '../serializers/pokemon-serializers';
 
 const debug = createDebug('Server:PokemonController');
 
@@ -10,8 +15,11 @@ export const pokemonController = {
   create: async (req: Request, res: Response): Promise<void> => {
     try {
       debug('Start create new pokemon: %j', req.body);
-      // agregar serializer
-      const { execute } = createPokemon(req.body);
+      const args = createPokemonSerializers(req);
+      const { execute } = createPokemon({
+        ...args,
+        profile_id: (req as IRequestAuth).userAuth.id
+      });
       const result = await execute();
       debug('Succesfull create new pokemon: %j', result);
       res.status(201).send(result);
@@ -29,8 +37,14 @@ export const pokemonController = {
   update: async (req: Request, res: Response): Promise<void> => {
     try {
       debug('Start update pokemon: %j', req.body);
-      // agregar serializer
-      const { execute } = updatePokemon(req.body, req.params.id);
+      const args = updatePokemonSerializers(req);
+      const { execute } = updatePokemon(
+        {
+          ...args,
+          profile_id: (req as IRequestAuth).userAuth.id
+        },
+        req.params.id
+      );
       const result = await execute();
       debug('Succesfull update pokemon: %j', result);
       res.status(200).send(result);
@@ -45,6 +59,8 @@ export const pokemonController = {
       res.status(result.statusCode).send(result);
     }
   },
+
+  // falta hacer los deletes
   delete: async (req: Request, res: Response): Promise<void> => {
     try {
       debug('Start delete pokemon: %s', req.params.id);

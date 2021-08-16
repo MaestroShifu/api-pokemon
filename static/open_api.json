@@ -24,6 +24,10 @@
       {
         "name": "ManageAuth",
         "description": "Manejo de autenticacion en el sistema"
+      },
+      {
+        "name": "ManagePokemon",
+        "description": "Operaciones basicas con los pokemones"
       }
     ],
     "security": [],
@@ -79,10 +83,100 @@
             }
           }
         }
+      },
+      "/pokemon": {
+        "summary": "Manejo de de los pokemones de la plataforma",
+        "description": "Sirve para el manejo de los pokemones",
+        "post": {
+          "tags": [
+            "ManagePokemon"
+          ],
+          "summary": "Creaciones de pokemones",
+          "description": "Sirve para ingresar un nuevo pokemon a la plataforma",
+          "operationId": "postPokemon",
+          "requestBody": {
+            "$ref": "#/components/requestBodies/create_pokemon"
+          },
+          "responses": {
+            "201": {
+              "$ref": "#/components/responses/pokemon_response"
+            },
+            "400": {
+              "$ref": "#/components/responses/general_error_response"
+            },
+            "401": {
+              "$ref": "#/components/responses/general_error_response"
+            },
+            "500": {
+              "$ref": "#/components/responses/general_error_response"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-access-token"
+          }
+        ]
+      },
+      "/pokemon/{id}": {
+        "summary": "Manejo de de los pokemones de la plataforma",
+        "description": "Sirve para el manejo de los pokemones",
+        "put": {
+          "tags": [
+            "ManagePokemon"
+          ],
+          "summary": "Actualizar los pokemones que posee el usuario",
+          "description": "Sirve para actualizar un pokemon",
+          "operationId": "putPokemon",
+          "requestBody": {
+            "$ref": "#/components/requestBodies/update_pokemon"
+          },
+          "responses": {
+            "200": {
+              "$ref": "#/components/responses/pokemon_response"
+            },
+            "400": {
+              "$ref": "#/components/responses/general_error_response"
+            },
+            "401": {
+              "$ref": "#/components/responses/general_error_response"
+            },
+            "500": {
+              "$ref": "#/components/responses/general_error_response"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-access-token"
+          },
+          {
+            "$ref": "#/components/parameters/id-path"
+          }
+        ]
       }
     },
     "components": {
-      "parameters": {},
+      "parameters": {
+        "x-access-token": {
+          "name": "x-access-token",
+          "in": "header",
+          "description": "Token de acceso",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        },
+        "id-path": {
+          "name": "id",
+          "in": "path",
+          "description": "Id que se desea consultar",
+          "required": true,
+          "schema": {
+            "type": "string"
+          }
+        }
+      },
       "schemas": {
         "auth_register_body": {
           "type": "object",
@@ -183,6 +277,174 @@
             "message"
           ],
           "additionalProperties": false
+        },
+        "types_pokemon": {
+          "type": "string",
+          "enum": [
+            "Acero",
+            "Agua",
+            "Bicho",
+            "Dragón",
+            "Eléctrico",
+            "Fantasma",
+            "Fuego",
+            "Hada",
+            "Hielo",
+            "Lucha",
+            "Normal",
+            "Planta",
+            "Psíquico",
+            "Roca",
+            "Siniestro",
+            "Tierra",
+            "Veneno",
+            "Volador",
+            "???"
+          ]
+        },
+        "crear_pokemon_body": {
+          "type": "object",
+          "properties": {
+            "types": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/types_pokemon"
+              }
+             },
+             "name": {
+               "type": "string",
+               "maxLength": 300
+             },
+             "ability": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "is_public": {
+              "type": "boolean"
+            },
+            "url_image": {
+              "type": "string",
+              "maxLength": 500
+            }
+          },
+          "required": [
+            "ability",
+            "name",
+            "types"
+          ],
+          "additionalProperties": false
+        },
+        "types_body":{
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer"
+            },
+            "name": {
+              "type": "string",
+              "enum": [
+                "Acero",
+                "Agua",
+                "Bicho",
+                "Dragón",
+                "Eléctrico",
+                "Fantasma",
+                "Fuego",
+                "Hada",
+                "Hielo",
+                "Lucha",
+                "Normal",
+                "Planta",
+                "Psíquico",
+                "Roca",
+                "Siniestro",
+                "Tierra",
+                "Veneno",
+                "Volador",
+                "???"
+              ]
+            }
+          },
+          "required": [
+            "id",
+            "name"
+          ],
+          "additionalProperties": false
+        },
+        "pokemon_body": {
+          "type": "object",
+          "properties": {
+            "types": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/types_body"
+              }
+             },
+             "name": {
+               "type": "string",
+               "maxLength": 300
+             },
+             "ability": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "is_public": {
+              "type": "boolean"
+            },
+            "url_image": {
+              "type": "string",
+              "maxLength": 500
+            },
+            "profile_id": {
+              "type": "integer"
+            },
+            "id": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "ability",
+            "name",
+            "types",
+            "is_public",
+            "url_image",
+            "profile_id",
+            "id"
+          ],
+          "additionalProperties": false
+        },
+        "update_pokemon_body": {
+          "type": "object",
+          "properties": {
+            "add_types": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/types_pokemon"
+              }
+            },
+            "remove_types": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/types_pokemon"
+              }
+            },
+            "name": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "ability": {
+              "type": "string",
+              "maxLength": 300
+            },
+            "is_public": {
+              "type": "boolean"
+            },
+            "url_image": {
+              "type": "string",
+              "maxLength": 500
+            }
+          },
+          "additionalProperties": false
         }
       },
       "examples": {
@@ -216,6 +478,46 @@
             "statusCode": "500",
             "message": "Error del lado del servidor :3"
           }
+        },
+        "crear_pokemon_example": {
+          "summary": "Ejemplo crear un nuevo pokemon",
+          "value": {
+            "name": "pikachu",
+            "ability": "Electricidad estática",
+            "types": ["Eléctrico"]
+          }
+        },
+        "crear_pokemon_body_example": {
+          "summary": "Cuerpo de un pokemon",
+          "value": {
+            "name": "pikachu",
+            "ability": "Electricidad estática",
+            "is_public": false,
+            "url_image": "https://static.wikia.nocookie.net/espokemon/images/7/77/Pikachu.png/revision/latest?cb=20150621181250",
+            "profile_id": 1,
+            "id": 9,
+            "types": [
+              {
+                "id": 5,
+                "name": "Eléctrico"
+              },
+              {
+                "id": 18,
+                "name": "Volador"
+              }
+            ]
+          }
+        },
+        "update_pokemon_example": {
+          "summary": "Ejemplo para actualizar un pokemon",
+          "value": {
+            "name": "pikachu",
+            "ability": "Electricidad estática",
+            "is_public": false,
+            "url_image": "https://static.wikia.nocookie.net/espokemon/images/7/77/Pikachu.png/revision/latest?cb=20150621181250",
+            "add_types": ["Volador"],
+            "remove_types": ["Eléctrico"]
+          }
         }
       },
       "responses": {
@@ -248,6 +550,21 @@
               }
             }
           }
+        },
+        "pokemon_response": {
+          "description": "Es la respuesta de un pokemon",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/pokemon_body"
+              },
+              "examples": {
+                "crear_pokemon_body_example": {
+                  "$ref": "#/components/examples/crear_pokemon_body_example"
+                }
+              }
+            }
+          }
         }
       },
       "requestBodies": {
@@ -276,6 +593,36 @@
               "examples": {
                 "auth_login_body_example": {
                   "$ref": "#/components/examples/auth_login_body_example"
+                }
+              }
+            }
+          }
+        },
+        "create_pokemon": {
+          "description": "Body para crear nuevos pokemones",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/crear_pokemon_body"
+              },
+              "examples": {
+                "crear_pokemon_example": {
+                  "$ref": "#/components/examples/crear_pokemon_example"
+                }
+              }
+            }
+          }
+        },
+        "update_pokemon": {
+          "description": "Body para actualizar a los pokemones",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/update_pokemon_body"
+              },
+              "examples": {
+                "update_pokemon_example": {
+                  "$ref": "#/components/examples/update_pokemon_example"
                 }
               }
             }

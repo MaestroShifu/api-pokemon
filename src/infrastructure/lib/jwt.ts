@@ -1,9 +1,9 @@
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import { getEnviroment } from '../config/config';
 
 const env = getEnviroment();
 
-interface IGenerateTokenArgs {
+export interface IGenerateTokenArgs {
   [key: string]: string;
 }
 
@@ -13,6 +13,6 @@ export const generateToken = (args: IGenerateTokenArgs): string => {
   });
 };
 
-export const verifyToken = (token: string): JwtPayload | string => {
-  return jwt.verify(token, env.JWT_KEY);
+export const verifyToken = (token: string): IGenerateTokenArgs => {
+  return jwt.verify(token, env.JWT_KEY) as IGenerateTokenArgs;
 };
