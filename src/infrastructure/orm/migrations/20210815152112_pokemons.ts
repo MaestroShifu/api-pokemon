@@ -5,7 +5,7 @@ export async function up(knex: Knex): Promise<void> {
     table.increments('id').unique().primary();
     table.string('name').notNullable();
     table.string('ability').notNullable();
-    table.boolean('is_public').defaultTo(true);
+    table.boolean('is_public').defaultTo(false);
     table.string('url_image');
     table
       .integer('profile_id')
