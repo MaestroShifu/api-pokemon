@@ -156,7 +156,7 @@ describe('Pokemon api', () => {
         });
     });
 
-/*     it('Succesfull update pokemon', (done) => {
+    /*     it('Succesfull update pokemon', (done) => {
       mocked(Pokemon.query).mockReturnValue({
         withGraphFetched: jest.fn().mockResolvedValue({
           findById: jest.fn().mockResolvedValue(pokemon)
