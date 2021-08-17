@@ -11,6 +11,24 @@ export const getRoutesPokemon = (): Router => {
     caseSensitive: true
   });
 
+  pokemonRoutes.get(
+    '/me/pokemon',
+    validator.validate('get', '/me/pokemon'),
+    validateToken,
+    pokemonController.getMeAll
+  );
+  pokemonRoutes.get(
+    '/pokemon',
+    validator.validate('get', '/pokemon'),
+    validateToken,
+    pokemonController.getAll
+  );
+  pokemonRoutes.get(
+    '/pokemon/:id',
+    validator.validate('get', '/pokemon/{id}'),
+    validateToken,
+    pokemonController.getById
+  );
   pokemonRoutes.post(
     '/pokemon',
     validator.validate('post', '/pokemon'),
@@ -23,7 +41,18 @@ export const getRoutesPokemon = (): Router => {
     validateToken,
     pokemonController.update
   );
-  pokemonRoutes.delete('/pokemon/:id', pokemonController.delete);
+  pokemonRoutes.delete(
+    '/pokemon/deleteall',
+    validator.validate('delete', '/pokemon/deleteall'),
+    validateToken,
+    pokemonController.deleteAll
+  );
+  pokemonRoutes.delete(
+    '/pokemon/:id',
+    validator.validate('delete', '/pokemon/{id}'),
+    validateToken,
+    pokemonController.delete
+  );
 
   return pokemonRoutes;
 };

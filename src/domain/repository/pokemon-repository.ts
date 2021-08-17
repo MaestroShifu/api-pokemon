@@ -22,8 +22,22 @@ export type IUpdatePokemonArgs = Omit<
 };
 
 export const pokemonRepository = {
+  getPublicPokemon: async (): Promise<Pokemon[]> => {
+    const pokemons = await Pokemon.query()
+      .where('is_public', true)
+      .withGraphFetched('types');
+    return pokemons;
+  },
+  findByIdProfile: async (id: string): Promise<Pokemon[]> => {
+    const pokemons = await Pokemon.query()
+      .where('profile_id', id)
+      .withGraphFetched('types');
+    return pokemons || [];
+  },
   findById: async (id: string): Promise<Pokemon | undefined> => {
-    const pokemon = Pokemon.query().findById(id);
+    const pokemon = await Pokemon.query()
+      .withGraphFetched('types')
+      .findById(id);
     return pokemon;
   },
   create: async (args: ICreatePokemonArgs): Promise<Pokemon> => {
@@ -58,6 +72,10 @@ export const pokemonRepository = {
   },
   delete: async (id: string): Promise<boolean> => {
     await Pokemon.query().deleteById(id);
+    return true;
+  },
+  deleteAllByProfile: async (idProfile: string): Promise<boolean> => {
+    await Pokemon.query().where('profile_id', idProfile).delete();
     return true;
   }
 };

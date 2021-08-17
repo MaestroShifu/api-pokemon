@@ -84,9 +84,62 @@
           }
         }
       },
+      "/me/pokemon": {
+        "summary": "Listar los pokemones del usuario",
+        "description": "Listar todos los pokemones del usuario",
+        "get": {
+          "tags": [
+            "ManagePokemon"
+          ],
+          "summary": "Listar todos los pokemones del usuario",
+          "description": "Listar todos los pokemones del usuario",
+          "operationId": "meGetPokemon",
+          "responses": {
+            "200": {
+              "$ref": "#/components/responses/pokemon_array_response"
+            },
+            "400": {
+              "$ref": "#/components/responses/general_error_response"
+            },
+            "401": {
+              "$ref": "#/components/responses/general_error_response"
+            },
+            "500": {
+              "$ref": "#/components/responses/general_error_response"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-access-token"
+          }
+        ]
+      },
       "/pokemon": {
         "summary": "Manejo de de los pokemones de la plataforma",
         "description": "Sirve para el manejo de los pokemones",
+        "get": {
+          "tags": [
+            "ManagePokemon"
+          ],
+          "summary": "Listar todos los pokemones",
+          "description": "Lista todos los pokemones publicos de la plataforma",
+          "operationId": "getPokemon",
+          "responses": {
+            "200": {
+              "$ref": "#/components/responses/pokemon_array_response"
+            },
+            "400": {
+              "$ref": "#/components/responses/general_error_response"
+            },
+            "401": {
+              "$ref": "#/components/responses/general_error_response"
+            },
+            "500": {
+              "$ref": "#/components/responses/general_error_response"
+            }
+          }
+        },
         "post": {
           "tags": [
             "ManagePokemon"
@@ -121,6 +174,28 @@
       "/pokemon/{id}": {
         "summary": "Manejo de de los pokemones de la plataforma",
         "description": "Sirve para el manejo de los pokemones",
+        "get": {
+          "tags": [
+            "ManagePokemon"
+          ],
+          "summary": "Consultar un pokemon especifico",
+          "description": "Consultar un pokemon por id",
+          "operationId": "getByIdPokemon",
+          "responses": {
+            "200": {
+              "$ref": "#/components/responses/pokemon_response"
+            },
+            "400": {
+              "$ref": "#/components/responses/general_error_response"
+            },
+            "401": {
+              "$ref": "#/components/responses/general_error_response"
+            },
+            "500": {
+              "$ref": "#/components/responses/general_error_response"
+            }
+          }
+        },
         "put": {
           "tags": [
             "ManagePokemon"
@@ -146,12 +221,65 @@
             }
           }
         },
+        "delete": {
+          "tags": [
+            "ManagePokemon"
+          ],
+          "summary": "Eliminar pokemones",
+          "description": "Eliminar pokemones especificos de la plataforma",
+          "operationId": "deletePokemon",
+          "responses": {
+            "204": {
+              "description": "Manejo exitoso de eliminacion de un pokemon"
+            },
+            "400": {
+              "$ref": "#/components/responses/general_error_response"
+            },
+            "401": {
+              "$ref": "#/components/responses/general_error_response"
+            },
+            "500": {
+              "$ref": "#/components/responses/general_error_response"
+            }
+          }
+        },
         "parameters": [
           {
             "$ref": "#/components/parameters/x-access-token"
           },
           {
             "$ref": "#/components/parameters/id-path"
+          }
+        ]
+      },
+      "/pokemon/deleteall": {
+        "summary": "Eliminar todos los pokemon",
+        "description": "Sirve para eliminar todos los pokemons que poseo",
+        "delete": {
+          "tags": [
+            "ManagePokemon"
+          ],
+          "summary": "Eliminar pokemones",
+          "description": "Eliminar todos mis pokemones",
+          "operationId": "deleteAllPokemon",
+          "responses": {
+            "204": {
+              "description": "Manejo exitoso de eliminacion de un pokemon"
+            },
+            "400": {
+              "$ref": "#/components/responses/general_error_response"
+            },
+            "401": {
+              "$ref": "#/components/responses/general_error_response"
+            },
+            "500": {
+              "$ref": "#/components/responses/general_error_response"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "$ref": "#/components/parameters/x-access-token"
           }
         ]
       }
@@ -413,6 +541,12 @@
           ],
           "additionalProperties": false
         },
+        "pokemon_array_body": {
+          "type": "array",
+          "items": {
+            "$ref": "#/components/schemas/pokemon_body"
+          }
+        },
         "update_pokemon_body": {
           "type": "object",
           "properties": {
@@ -557,6 +691,21 @@
             "application/json": {
               "schema": {
                 "$ref": "#/components/schemas/pokemon_body"
+              },
+              "examples": {
+                "crear_pokemon_body_example": {
+                  "$ref": "#/components/examples/crear_pokemon_body_example"
+                }
+              }
+            }
+          }
+        },
+        "pokemon_array_response": {
+          "description": "Es una lista de pokemones",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/pokemon_array_body"
               },
               "examples": {
                 "crear_pokemon_body_example": {
