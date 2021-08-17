@@ -1,12 +1,12 @@
 import { mocked } from 'ts-jest/utils';
-import { registerProfile } from '../../../src/application/use_case/auth/register-case';
-import { Profile } from '../../../src/domain/models/profile';
+import { registerProfile } from '../../../../src/application/use_case/auth/register-case';
+import { Profile } from '../../../../src/domain/models/profile';
 import {
   IProfileCreateArgs,
   profileRepository
-} from '../../../src/domain/repository/profile-repository';
+} from '../../../../src/domain/repository/profile-repository';
 
-jest.mock('../../../src/domain/repository/profile-repository');
+jest.mock('../../../../src/domain/repository/profile-repository');
 
 const args: IProfileCreateArgs = {
   email: 'sdanielsarsantos@gmail.com',

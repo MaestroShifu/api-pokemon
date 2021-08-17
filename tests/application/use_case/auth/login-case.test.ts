@@ -1,12 +1,12 @@
 import { mocked } from 'ts-jest/utils';
-import { loginProfile } from '../../../src/application/use_case/auth/login-case';
-import { Profile } from '../../../src/domain/models/profile';
+import { loginProfile } from '../../../../src/application/use_case/auth/login-case';
+import { Profile } from '../../../../src/domain/models/profile';
 import {
   IPorfileLoginArgs,
   profileRepository
-} from '../../../src/domain/repository/profile-repository';
+} from '../../../../src/domain/repository/profile-repository';
 
-jest.mock('../../../src/domain/repository/profile-repository');
+jest.mock('../../../../src/domain/repository/profile-repository');
 
 const args: IPorfileLoginArgs = {
   email: 'sdanielsarsantos@gmail.com',
