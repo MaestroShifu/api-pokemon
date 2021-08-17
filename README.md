@@ -12,5 +12,5 @@ Si necesita el [Docker-Compose](https://github.com/MaestroShifu/docker-save-life
 
 
 # Documentacion
-* Una vez tenga el proyecto corriendo satisfactoriamente ingresara por medio del navegador a esta [URL](http://localhost:3000/api-docs/#/)
-* 
+* Una vez tenga el proyecto corriendo satisfactoriamente ingresara por medio del navegador a esta [URL](http://localhost:3000/api-docs/#/).
+* Tambien se le agregara la collection de Postman que se utilizo para el desarrollo de la misma [Postman-collection](https://github.com/MaestroShifu/api-pokemon/blob/main/static/Api%20Pokemon.postman_collection.json).
