@@ -9,6 +9,7 @@ Si necesita el [Docker-Compose](https://github.com/MaestroShifu/docker-save-life
 * Vamos a lanzar nuestras migraciones y los datos semilla con ``npm run migration:up`` y ``npm run seed:run``, esto creara las tablas en su base de datos local y agregara los datos base para que el proyecto empieze a funcionar.
 * Corremos nuestro proyecto de forma ``development`` con el comando ``npm run dev``
 * Y listo!! tiene su Api de pokemon lista para probarse.
+* Si desea correr los test unitarios con ``npm run test`` o si desea validar la covertura tiene ``npm run coverage``.
 
 
 # Documentacion
